@@ -1,1 +1,5 @@
-/*    /index.html   200
+# Allow Google Search Console verification file to pass through
+/google1234567890abcdef.html  /google1234567890abcdef.html  200
+
+# React SPA fallback
+/*  /index.html  200
