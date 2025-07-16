@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import config from '../config/config';
+import axios from 'axios';
 import '../styles/Theme.css';
 import '../styles/App.css';
 
@@ -14,7 +15,7 @@ const Todos = ({ logout }) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
-    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const BACKEND_URL = config.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         fetchTodos();

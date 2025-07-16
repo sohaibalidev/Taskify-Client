@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FiSun, FiMoon, FiLogOut } from 'react-icons/fi';
-import Login from './components/Login';
-import Register from './components/Register';
-import Todos from './components/Todos';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Todos from './pages/Todos';
+import NotFound from './pages/NotFound';
 import './styles/Theme.css';
 import './styles/App.css';
 
@@ -49,7 +50,7 @@ function App() {
         <header className="app-header">
           <div className="header-container">
             <Link to="/" className="logo">
-              <h1>Taskify</h1>
+              <h1>Wrikos</h1>
             </Link>
 
             <div className="header-actions">
@@ -76,6 +77,7 @@ function App() {
             <Route path="/login" element={!isAuthenticated ? <Login setAuth={setAuth} /> : <Navigate to="/" />} />
             <Route path="/register" element={!isAuthenticated ? <Register setAuth={setAuth} /> : <Navigate to="/" />} />
             <Route path="/" element={isAuthenticated ? <Todos logout={logout} /> : <Navigate to="/login" />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
       </div>

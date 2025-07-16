@@ -1,20 +1,19 @@
+import { useNavigate, Link } from 'react-router-dom';
+import config from '../config/config';
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
 import '../styles/Theme.css';
 import '../styles/App.css';
 
-const Login = ({ setAuth }) => {
+const Register = ({ setAuth }) => {
     const [formData, setFormData] = useState({
-        username: '',
-        password: ''
+        username: '', password: ''
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const { username, password } = formData;
-    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -24,18 +23,21 @@ const Login = ({ setAuth }) => {
         setError('');
 
         try {
-            const res = await axios.post(`${BACKEND_URL}/api/login`, { username, password });
-            setAuth(res.data.token);
-            navigate('/');
+            const res = await axios.post(`${config.REACT_APP_BACKEND_URL}/api/register`, { username, password });
+            if (res.status === 201) {
+                const loginRes = await axios.post(`${config.REACT_APP_BACKEND_URL}/api/login`, { username, password });
+                setAuth(loginRes.data.token);
+                navigate('/');
+            }
         } catch (err) {
-            setError(err.response?.data?.message || 'Invalid credentials');
+            setError(err.response?.data?.message || 'Registration failed');
             setLoading(false);
         }
     };
 
     return (
         <div className="auth-form">
-            <h1>Login</h1>
+            <h1>Register</h1>
             {error && <div className="error-message">{error}</div>}
             <form onSubmit={onSubmit}>
                 <div className="form-group">
@@ -66,14 +68,14 @@ const Login = ({ setAuth }) => {
                     disabled={loading}
                     data-auth="true"
                 >
-                    {loading ? 'Logging in...' : 'Login'}
+                    {loading ? 'Registering...' : 'Register'}
                 </button>
             </form>
             <p style={{ textAlign: 'center', marginTop: '15px' }}>
-                Don't have an account? <Link to="/register">Register</Link>
+                Already have an account? <Link to="/login">Login</Link>
             </p>
         </div>
     );
 };
 
-export default Login;
+export default Register;

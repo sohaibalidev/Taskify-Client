@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import config from '../config/config';
 import '../styles/Theme.css';
 import '../styles/App.css';
 
-const Register = ({ setAuth }) => {
+const Login = ({ setAuth }) => {
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -14,8 +15,7 @@ const Register = ({ setAuth }) => {
     const navigate = useNavigate();
 
     const { username, password } = formData;
-    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
+    
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = async e => {
@@ -24,21 +24,18 @@ const Register = ({ setAuth }) => {
         setError('');
 
         try {
-            const res = await axios.post(`${BACKEND_URL}/api/register`, { username, password });
-            if (res.status === 201) {
-                const loginRes = await axios.post(`${BACKEND_URL}/api/login`, { username, password });
-                setAuth(loginRes.data.token);
-                navigate('/');
-            }
+            const res = await axios.post(`${config.REACT_APP_BACKEND_URL}/api/login`, { username, password });
+            setAuth(res.data.token);
+            navigate('/');
         } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed');
+            setError(err.response?.data?.message || 'Invalid credentials');
             setLoading(false);
         }
     };
 
     return (
         <div className="auth-form">
-            <h1>Register</h1>
+            <h1>Login</h1>
             {error && <div className="error-message">{error}</div>}
             <form onSubmit={onSubmit}>
                 <div className="form-group">
@@ -69,14 +66,14 @@ const Register = ({ setAuth }) => {
                     disabled={loading}
                     data-auth="true"
                 >
-                    {loading ? 'Registering...' : 'Register'}
+                    {loading ? 'Logging in...' : 'Login'}
                 </button>
             </form>
             <p style={{ textAlign: 'center', marginTop: '15px' }}>
-                Already have an account? <Link to="/login">Login</Link>
+                Don't have an account? <Link to="/register">Register</Link>
             </p>
         </div>
     );
 };
 
-export default Register;
+export default Login;

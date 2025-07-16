@@ -1,5 +1,7 @@
-# Allow Google Search Console verification file to pass through
+# Redirects
 /google1234567890abcdef.html  /google1234567890abcdef.html  200
+/sitemap.xml /sitemap.xml
+/robots.txt /robots.txt
 
 # React SPA fallback
 /*  /index.html  200
