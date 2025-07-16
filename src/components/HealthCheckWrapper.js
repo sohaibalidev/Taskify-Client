@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const RETRY_IN = 30
+const RETRY_IN = 30;
+const TIMEOUT = 3;
 
 const HealthCheckWrapper = ({ children }) => {
     const [isServerOnline, setIsServerOnline] = useState(null);
@@ -11,9 +12,17 @@ const HealthCheckWrapper = ({ children }) => {
 
     const checkHealth = async () => {
         try {
-            await axios.get(`${BACKEND_URL}/api/health`);
-            setIsServerOnline(true);
+            const source = axios.CancelToken.source();
+            const timeout = setTimeout(() => {
+                source.cancel('Timeout after 3 seconds');
+            }, TIMEOUT * 1000);
 
+            await axios.get(`${BACKEND_URL}/api/health`, {
+                cancelToken: source.token
+            });
+
+            clearTimeout(timeout);
+            setIsServerOnline(true);
             clearInterval(retryTimer);
         } catch (err) {
             setIsServerOnline(false);
@@ -23,6 +32,9 @@ const HealthCheckWrapper = ({ children }) => {
 
     useEffect(() => {
         checkHealth();
+        return () => {
+            clearInterval(retryTimer);
+        };
     }, []);
 
     useEffect(() => {
