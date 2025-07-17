@@ -1,88 +1,37 @@
-# Taskify Client
+# Wrikos
 
-This is the frontend of **Taskify**, a lightweight personal task manager with user authentication, dark/light mode support, and a minimal UI focused on productivity.
+**Wrikos** is a full-stack personal task management web application designed to help users stay organized, focused, and productive. With a clean interface and essential features, Wrikos allows each user to manage their own private todo list with ease.
 
----
-
-## Features
-
-- User-friendly React interface  
-- Light and dark mode toggle  
-- Secure login and registration  
-- Add, edit, complete, and delete todos  
-- Each user has a private todo list  
+Whether you're planning daily tasks or tracking long-term goals, Wrikos offers a distraction-free experience with seamless theme switching between light and dark modes.
 
 ---
 
-## Tech Stack
+## What It Offers
 
-- React.js  
-- React Router  
-- Axios  
-- CSS3 (custom theming)  
+- **User Accounts**  
+  Secure registration and login using JWT-based authentication. Each user's tasks are stored separately for full data privacy.
 
----
+- **Smart Task Management**  
+  Create, edit, mark complete, and delete todos. Tasks can be updated instantly, with intuitive controls and feedback.
 
-## Getting Started
+- **Dark/Light Mode**  
+  Built-in theme switcher for comfortable use in any environment.
 
-1. Clone the repository:
+- **Responsive Design**  
+  Fully mobile-ready, works across all screen sizes.
 
-```bash
-git clone https://github.com/yourusername/taskify-client.git
-cd taskify-client
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Create a `.env` file:
-
-```env
-REACT_APP_BACKEND_URL=http://localhost:5000
-```
-
-4. Start the development server:
-
-```bash
-npm start
-```
-
-The app will run at `http://localhost:3000`
+- **Error Handling & Feedback**  
+  Helpful error messages and a smooth experience, even when the backend is offline — thanks to a built-in health check system.
 
 ---
 
-## Folder Structure
+## Tech Overview
 
-```
-taskify-client/
-│
-├── public/
-├── src/
-│   ├── components/
-│   │   ├── Login.js
-│   │   ├── Register.js
-│   │   └── Todos.js
-│   ├── styles/
-│   │   ├── App.css
-│   │   └── Theme.css
-│   └── App.js
-│
-├── .env
-├── package.json
-└── README.md
-```
+- **Frontend**: React.js, React Router, Axios, Custom CSS  
+- **Backend**: Node.js, Express.js, MongoDB (via MongoDB Atlas)  
+- **Authentication**: JSON Web Tokens (JWT)  
+- **Deployment Ready**: Structured for deployment on platforms like Netlify (frontend) and Render or Railway (backend)  
 
 ---
 
-## Deployment
-
-To deploy on Netlify:
-
-1. Build the project:
-
-```bash
-npm run build
-```
+Wrikos is designed for people who want **just enough power** to stay organized without the clutter of traditional productivity apps.
